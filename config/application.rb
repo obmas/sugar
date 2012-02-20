@@ -49,6 +49,9 @@ module Sugar
 
     # Enable the asset pipeline
     config.assets.enabled = true
+
+    # Use memcached
+    config.cache_store = :mem_cache_store
   end
 end
 
