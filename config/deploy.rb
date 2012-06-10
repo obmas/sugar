@@ -27,36 +27,36 @@ set :deploy_to, "/var/www/#{application}"
 
 desc "Create shared directories"
 task :create_shared_dirs, :roles => [:web,:app] do
-	run "mkdir #{deploy_to}/#{shared_dir}/cache"
-	run "mkdir #{deploy_to}/#{shared_dir}/public_cache"
-	run "mkdir #{deploy_to}/#{shared_dir}/sockets"
-	run "mkdir #{deploy_to}/#{shared_dir}/sessions"
-	run "mkdir #{deploy_to}/#{shared_dir}/index"
-	run "mkdir #{deploy_to}/#{shared_dir}/sphinx"
-	run "mkdir #{deploy_to}/#{shared_dir}/config"
-	run "mkdir #{deploy_to}/#{shared_dir}/config/initializers"
-	run "touch #{deploy_to}/#{shared_dir}/config/database.yml"
-	run "touch #{deploy_to}/#{shared_dir}/config/initializers/mailer.rb"
+  run "mkdir #{deploy_to}/#{shared_dir}/cache"
+  run "mkdir #{deploy_to}/#{shared_dir}/public_cache"
+  run "mkdir #{deploy_to}/#{shared_dir}/sockets"
+  run "mkdir #{deploy_to}/#{shared_dir}/sessions"
+  run "mkdir #{deploy_to}/#{shared_dir}/index"
+  run "mkdir #{deploy_to}/#{shared_dir}/sphinx"
+  run "mkdir #{deploy_to}/#{shared_dir}/config"
+  run "mkdir #{deploy_to}/#{shared_dir}/config/initializers"
+  run "touch #{deploy_to}/#{shared_dir}/config/database.yml"
+  run "touch #{deploy_to}/#{shared_dir}/config/initializers/mailer.rb"
 end
 
 desc "Create symlinks"
 task :create_symlinks, :roles => [:web,:app] do
-	run "ln -s #{deploy_to}/#{shared_dir}/cache        #{deploy_to}/#{current_dir}/tmp/cache"
-	run "ln -s #{deploy_to}/#{shared_dir}/sockets      #{deploy_to}/#{current_dir}/tmp/sockets"
-	run "ln -s #{deploy_to}/#{shared_dir}/sessions     #{deploy_to}/#{current_dir}/tmp/sessions"
-	run "ln -s #{deploy_to}/#{shared_dir}/index        #{deploy_to}/#{current_dir}/index"
-	run "ln -s #{deploy_to}/#{shared_dir}/public_cache #{deploy_to}/#{current_dir}/public/cache"
-	run "ln -s #{deploy_to}/#{shared_dir}/doodles      #{deploy_to}/#{current_dir}/public/doodles"
-	run "ln -s #{deploy_to}/#{shared_dir}/sphinx       #{deploy_to}/#{current_dir}/db/sphinx"
+  run "ln -s #{deploy_to}/#{shared_dir}/cache        #{deploy_to}/#{current_dir}/tmp/cache"
+  run "ln -s #{deploy_to}/#{shared_dir}/sockets      #{deploy_to}/#{current_dir}/tmp/sockets"
+  run "ln -s #{deploy_to}/#{shared_dir}/sessions     #{deploy_to}/#{current_dir}/tmp/sessions"
+  run "ln -s #{deploy_to}/#{shared_dir}/index        #{deploy_to}/#{current_dir}/index"
+  run "ln -s #{deploy_to}/#{shared_dir}/public_cache #{deploy_to}/#{current_dir}/public/cache"
+  run "ln -s #{deploy_to}/#{shared_dir}/doodles      #{deploy_to}/#{current_dir}/public/doodles"
+  run "ln -s #{deploy_to}/#{shared_dir}/sphinx       #{deploy_to}/#{current_dir}/db/sphinx"
 end
 
 desc "Symlink configs"
 task :symlink_configs, :roles => [:web, :app] do
-	run "ln -nsf #{shared_path}/config/database.yml             #{release_path}/config/database.yml"
-	run "ln -nsf #{shared_path}/config/session_key              #{release_path}/config/session_key"
-	run "ln -nsf #{shared_path}/config/newrelic.yml             #{release_path}/config/newrelic.yml"
-	run "ln -nsf #{shared_path}/config/initializers/mailer.rb   #{release_path}/config/initializers/mailer.rb"
-	run "ln -nsf #{shared_path}/config/initializers/newrelic.rb #{release_path}/config/initializers/newrelic.rb"
+  run "ln -nsf #{shared_path}/config/database.yml             #{release_path}/config/database.yml"
+  run "ln -nsf #{shared_path}/config/session_key              #{release_path}/config/session_key"
+  run "ln -nsf #{shared_path}/config/newrelic.yml             #{release_path}/config/newrelic.yml"
+  run "ln -nsf #{shared_path}/config/initializers/mailer.rb   #{release_path}/config/initializers/mailer.rb"
+  run "ln -nsf #{shared_path}/config/initializers/newrelic.rb #{release_path}/config/initializers/newrelic.rb"
 end
 
 desc "Packs themes"
@@ -81,27 +81,27 @@ namespace :deploy do
         end
     end
 
-	desc "Restart Application"
-	task :restart, :roles => :app do
-		run "touch #{current_path}/tmp/restart.txt"
-	end
+  desc "Restart Application"
+  task :restart, :roles => :app do
+    run "touch #{current_path}/tmp/restart.txt"
+  end
 end
 
 namespace :delayed_job do
-	desc "Start delayed_job process" 
-	task :start, :roles => :app do
-		run "cd #{current_path}; script/delayed_job start production" 
-	end
+  desc "Start delayed_job process" 
+  task :start, :roles => :app do
+    run "cd #{current_path}; script/delayed_job start production" 
+  end
 
-	desc "Stop delayed_job process" 
-	task :stop, :roles => :app do
-		run "cd #{current_path}; script/delayed_job stop production" 
-	end
+  desc "Stop delayed_job process" 
+  task :stop, :roles => :app do
+    run "cd #{current_path}; script/delayed_job stop production" 
+  end
 
-	desc "Restart delayed_job process" 
-	task :restart, :roles => :app do
-		run "cd #{current_path}; script/delayed_job restart production" 
-	end
+  desc "Restart delayed_job process" 
+  task :restart, :roles => :app do
+    run "cd #{current_path}; script/delayed_job restart production" 
+  end
 end
 
 
