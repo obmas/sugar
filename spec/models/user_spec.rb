@@ -167,6 +167,16 @@ describe User do
     specify { create(:user, mobile_theme: "mytheme_mobile").mobile_theme.should == "mytheme_mobile" }
   end
 
+  describe "#notify!" do
+    let(:notifier)     { create(:user) }
+    let(:conversation) { create(:conversation) }
+    subject { user.notify!(conversation, :notifier => notifier) }
+
+    it { should be_kind_of(Notification) }
+    its(:notifiable) { should == conversation }
+    its(:notifier)   { should == notifier }
+  end
+
   describe "#gamertag_avatar_url" do
     specify { user.gamertag_avatar_url.should be_nil }
     specify { create(:user, gamertag: 'my gamertag')
